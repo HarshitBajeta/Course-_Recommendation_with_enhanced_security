@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Recommender System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss-carousel@0.2.0/dist/carousel.min.css" rel="stylesheet"> -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    {% comment %} <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> {% endcomment %}
+
+    <!-- <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" /> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/tailwindcss-carousel@0.2.0/dist/carousel.min.js"></script> -->
+    <!-- Latest compiled and minified CSS -->
+</head>
+<style>
+    .text-black{
+        color:black
+    }
+</style>
+<body style="background-color:#778899">
+
+    {% comment %} <nav class="navbar" style="background-color:black">
+        <a class="navbar-brand">Course Recommender</a>
+        <ul class="nav navbar-nav">
+            <li><a href="/">Home</a></li>
+            <li><a href="/recommend">Recommend</a></li>
+            <li><a>Contact</a></li>
+        </ul>
+    </nav> {% endcomment %}
+    <nav class="py-3 px-6 flex justify-between items-center bg-black text-white">
+        <div>
+        <a href="/" class="text-xl font-semibold">My Course</a>
+        <a href="{%url 'core:recommend_ui' %}" class="text-xl font-semibold mx-6 ">Recommend</a>
+        </div>
+
+        <div class="space-x-6">
+            {%if request.user.is_authenticated%}
+            <a href="{%url 'core:logout' %}" class="px-6 py-2  font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Log Out</a>
+            <a href="{%url 'core:my_learning' %}" class="px-6 py-2 font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">My Learnings</a>
+            {%else%}
+            <a href="{%url 'core:signup' %}" class="px-6 py-2  font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Sign up</a>
+            <a href="{%url 'core:login' %}" class="px-6 py-2  font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">LogIn</a>
+            {%endif%}
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="text-black my-10px text-center" style="font-size:50px; padding:10px">Recommend Course</h1>
+                <form action="/recommend_books" method="GET">
+                    {% csrf_token %}
+                    <input name="user_input" type="text" class="form-control w-[50%] mx-auto mt-[1%]"><br>
+                    <input type="submit" class="btn btn-lg text-center ml-[25%] " style="background-color:white;" value="Recommend">
+                </form>
+            </div>
+
+            {% if data %}
+                {% for item in data %}
+                    <div class="col-md-3 mx-[3%] " style="margin-top:50px; margin-right:70px;">
+                        <div class="card">
+                            <div class="card-body bg-[#D3D3D3]"> 
+                                <h4 class="text-black" style="margin-bottom-10px">{{ item.0 }}</h4>
+                                <p>--------------------------------------------------</p>
+                                <p class="text-black">Conducted by:{{ item.1 }}</p>
+                                <p class="text-black">Level:{{ item.2 }}</p>
+                                <p class="text-black">Rating:{{ item.3 }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+</body>
+</html>

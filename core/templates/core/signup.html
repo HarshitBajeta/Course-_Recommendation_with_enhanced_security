@@ -1,0 +1,48 @@
+{%extends 'core/base.html'%}
+
+{%block title%}
+Sign Up
+{%endblock%}
+
+{%block content%}
+<div class="w-[35%] my-6 mx-auto p-6 bg-gray-100 rounded-xl shadow-xl">
+
+    <h1 class="mb-6 text-3xl text-center">Sign Up</h1>
+    <form action="." method="post"  enctype="multipart/form-data">
+
+        {%csrf_token%}
+        {{form.non_field_errors}}
+
+        <div class="mb-3">
+            <label for="" class="inline-block mb-2">Username</label><br>
+            <p class="h-[10%]">{{form.username}}<p>
+        </div>
+
+        <div class="mb-3 ">
+            <label for="" class="inline-block mb-2">Email</label><br>
+            {{form.email}}
+        </div>
+
+        <div class="mb-3">
+            <label for="" class="inline-block mb-2">Password</label><br>
+            {{form.password1}}
+        </div>
+
+        <div class="mb-3">
+            <label for="" class="inline-block mb-2">Confirm Password</label><br>
+            {{form.password2}}
+        </div>
+
+
+        {%if form.errors or form.non_feild_errors%}
+        <div class="mb-3 p-6 bg-red-100 rounded-xl">
+            {%for feild in form%}
+                {{feild.errors}}
+            {%endfor%}
+        </div>
+        {%endif%}
+        <br>
+        <button class="py-2 px-4 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">Submit</button>
+    </form>
+</div>
+{%endblock%}

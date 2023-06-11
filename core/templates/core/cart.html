@@ -1,0 +1,47 @@
+{% extends 'core/base.html'%}
+
+{%block title%}
+My Learnings
+{%endblock%}
+
+{%block content%}
+<section class="h-100" style="background-color:gray;">
+    <div class="container h-100 py-5">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-10">
+  
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="fw-normal mb-0 text-black text-3xl">My Learning</h1>
+          </div>
+  
+          {%for it in items%}
+          <div class="card rounded-3 mb-4">
+            <div class="card-body p-4">
+              <div class="row d-flex justify-content-between align-items-center">
+                <div class="col-md-2 col-lg-2 col-xl-2">
+                  <img
+                    src="{{it.item.img.url}}"
+                    class="img-fluid rounded-3" alt="item"
+                    style="width: 100px; height: 100px;">
+                </div>
+                <div class="col-md-3 col-lg-3 col-xl-3">
+                  <p class="lead fw-normal mb-2">{{it.item.name}}</p>
+                </div>
+                
+                <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                    <a href="#" class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Continue</a>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          {%endfor%}
+
+  
+        </div>
+      </div>
+    </div>
+  </section>
+
+{%endblock%}
+

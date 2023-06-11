@@ -1,0 +1,130 @@
+{%extends 'core/base.html'%}
+
+{%block title%}
+LogIn
+{%endblock%}
+
+{%block content%}
+<div class="w-[35%] my-6 mx-auto p-6 bg-gray-100 rounded-xl shadow-xl">
+  <h1 class="mb-6 text-3xl">
+    <center>LogIn</center>
+  </h1>
+  <!-- {%if message%}
+    <center>
+        <div class="flex items-center justify-between max-w-xs p-4 bg-white border rounded-md shadow-sm shadow-yellow-600">
+            <div class="flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-yellow-600" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                  d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                  clip-rule="evenodd" />
+              </svg>
+              <p class="ml-3 text-sm font-bold text-yellow-600">{{message}}</p>
+            </div>
+            <span class="inline-flex items-center cursor-pointer">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-600" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </span>
+          </div>
+          </center> 
+    {%endif%}-->
+
+
+  <form action="." method="post" enctype="multipart/form-data">
+
+    {%csrf_token%}
+
+    {%if form.errors or form.non_feild_errors%}
+    <div class="mb-3 p-6 bg-red-100 rounded-xl">
+      {%for feild in form%}
+      {{feild.errors}}
+      {%endfor%}
+      {{form.non_field_errors}}
+    </div>
+    {%endif%}
+
+    <div class="mb-3">
+      <label for="" class="inline-block mb-2">Username</label><br>
+      {{form.username}}
+      {% if form.username.errors %}
+      <ul class="errorlist">
+        {% for error in form.username.errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+
+    <div class="mb-3">
+      <label for="" class="inline-block mb-2">Password</label><br>
+      {{form.password}}
+      {% if form.password.errors %}
+      <ul class="errorlist">
+        {% for error in form.password.errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+{% comment %} 
+    {{form.img.as_hidden}} {% endcomment %}
+
+    <br>
+
+    <!--  -->
+    {% comment %} <center>
+
+      <button type="button" id="start-camera"
+        class="py-4 px-8 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">Start Camera</button>
+      <br><br>
+      <video id="video" width="320" height="240" autoplay></video>
+      <br>
+      <button type="button" id="click-photo"
+        class="py-4 px-8 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">Click Photo</button>
+      <br><br>
+      <canvas id="canvas" width="320" height="240" name="canvas"></canvas>
+      <br>
+
+    </center> {% endcomment %}
+    <!--  -->
+    <center>
+      <button type="submit" id='submit-button'
+        class="py-3 px-4 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">Submit</button>
+    </center>
+  </form>
+</div>
+
+
+{% comment %} <script>
+  let camera_button = document.querySelector("#start-camera");
+  let video = document.querySelector("#video");
+  let click_button = document.querySelector("#click-photo");
+  let canvas = document.querySelector("#canvas");
+
+  camera_button.addEventListener('click', async function () {
+    let stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+    video.srcObject = stream;
+  });
+
+  click_button.addEventListener('click', function () {
+    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+    let image_data_url = canvas.toDataURL('image/jpeg');
+    let ele = document.querySelector('#id_img');
+    ele.value = image_data_url.toString();
+
+    let username = document.querySelector("#id_username").value;
+    let password = document.querySelector("#id_password").value;
+
+    console.log("Username:", username);
+    console.log("Password:", password);
+    console.log(ele.value);
+  });
+
+  // });
+</script> {% endcomment %}
+
+
+
+
+{%endblock%}
